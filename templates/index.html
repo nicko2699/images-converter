@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Vectorizer</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #fileInput {
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 300px;
+            max-height: 300px;
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Image Vectorizer</h2>
+    
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="fileInput" accept=".jpg, .jpeg, .png" required>
+        <input type="submit" value="Vectorize Image">
+    </form>
+
+        <h2>Uploaded Image:</h2>
+        <img id="uploadedImage" src="" >
+
+        {% if uploaded_image %}
+            <img src="{{ uploaded_image }}" style="max-width: 300px; max-height: 300px;">
+        {% endif %}
+    
+    
+        <h2>Vectorized SVG:</h2>
+
+        {% if vectorized_image %}
+            <img class="imageSVG" src="{{ vectorized_image }}" alt="Vectorized Image">
+            <a class="download-btn" href="{{ vectorized_image }}" download="vectorized_image.svg">
+                <button>Download Vectorized Image</button>
+            </a>
+        {% endif %}
+
+
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const imageUrl = URL.createObjectURL(file);
+            document.getElementById('uploadedImage').src = imageUrl;
+        });
+    </script>
+</body>
+</html>
+
+
+
+
